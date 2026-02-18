@@ -42,7 +42,7 @@ const clientProps = defineProps<{
 
 
 const confirmDelete = (event: MouseEvent) => {
-    if (!window.confirm('Are you sure you want to delete this category?')) {
+    if (!window.confirm('Are you sure you want to delete this Client?')) {
         event.preventDefault();
     }
 };

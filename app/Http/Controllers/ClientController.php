@@ -15,7 +15,7 @@ class ClientController extends Controller
     {
         return Inertia::render('clients/index', [
             'clients' => Client::query()
-                ->select('id', 'name', 'email', 'created_at')
+                ->select('id', 'name', 'email', 'phone', 'created_at')
                 ->latest()
                 ->paginate(4),
         ]);
@@ -34,7 +34,16 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Client::create($request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'fiscal_code' => ['unique:clients,fiscal_code', 'string', 'max:255'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'send_address' => ['nullable', 'string'],
+        ]));
+        return redirect()
+            ->route('clients.index')
+            ->with('success', 'Client created successfully.');
     }
 
     /**
@@ -60,7 +69,17 @@ class ClientController extends Controller
      */
     public function update(Request $request, Client $client)
     {
-        //
+        $client->update($request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'fiscal_code' => ['unique:clients,fiscal_code,' . $client->id, 'string', 'max:255'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'send_address' => ['nullable', 'string'],
+        ]));
+
+        return redirect()
+            ->route('clients.index')
+            ->with('success', 'Client updated successfully.');
     }
 
     /**
@@ -68,6 +87,9 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        $client->delete();
+        return redirect()
+            ->route('clients.index')
+            ->with('success', 'Client deleted successfully.');
     }
 }
