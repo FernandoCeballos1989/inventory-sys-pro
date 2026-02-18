@@ -1,0 +1,28 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+
+class Provider extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'company_name',
+        'contact_name',
+        'phone_number',
+        'email',
+        'address',
+    ];
+
+    /**
+     * Relación: Un proveedor puede suministrar muchos movimientos de stock.
+     */
+    public function stocks(): HasMany
+    {
+        return $this->hasMany(Stock::class);
+    }
+}
