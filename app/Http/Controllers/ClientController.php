@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ClientController extends Controller
 {
@@ -12,7 +13,12 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('clients/index', [
+            'clients' => Client::query()
+                ->select('id', 'name', 'email', 'created_at')
+                ->latest()
+                ->paginate(4),
+        ]);
     }
 
     /**
@@ -20,7 +26,7 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('clients/create');
     }
 
     /**
@@ -44,7 +50,9 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        //
+        return Inertia::render('clients/edit', [
+            'client' => $client,
+        ]);
     }
 
     /**
