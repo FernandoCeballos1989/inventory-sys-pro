@@ -54,6 +54,12 @@ const formatCreatedAt = (value: string) => {
     return `${day}-${month}-${year}`;
 };
 
+const confirmDelete = (event: MouseEvent) => {
+    if (!window.confirm('Are you sure you want to delete this category?')) {
+        event.preventDefault();
+    }
+};
+
 </script>
 
 <template>
@@ -91,7 +97,7 @@ const formatCreatedAt = (value: string) => {
                                 <Link :href="categories.edit(category.id).url">
                                     <Button variant="outline">Edit</Button>
                                 </Link>
-                                <Link :href="categories.destroy(category.id).url" class="ml-2">
+                                <Link :href="categories.destroy(category.id).url" method="delete" class="ml-2" @click="confirmDelete">
                                     <Button variant="destructive">Delete</Button>
                                 </Link>
                             </TableCell>

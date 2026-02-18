@@ -6,16 +6,26 @@ import CategoryForm from '@/components/Category/Form.vue';
 import { type BreadcrumbItem } from '@/types';
 import categories from '@/routes/categories';
 
+type Category = {
+    id: number;
+    name: string;
+    description: string | null;
+};
+
+const props = defineProps<{
+    category: Category;
+}>();
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Categories',
-        href: categories.create().url,
+        href: categories.index().url,
     },
 ];
 </script>
 
 <template>
-    <Head title="Create Category" />
+    <Head title="Edit Category" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
@@ -26,7 +36,7 @@ const breadcrumbs: BreadcrumbItem[] = [
             </div>
 
             <div class="w-10/12 justify-center">
-                <CategoryForm :updating="false" />
+                <CategoryForm :updating="true" :category="props.category" />
             </div>
         </div>
     </AppLayout>
