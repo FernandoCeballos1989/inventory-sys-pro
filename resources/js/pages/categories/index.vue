@@ -110,10 +110,10 @@ const confirmDelete = (event: MouseEvent) => {
                     </p>
                     <div class="flex gap-2">
                         <Link v-if="categoryProps.categories.prev_page_url" :href="categoryProps.categories.prev_page_url">
-                            <Button variant="outline">Anterior</Button>
+                            <Button variant="outline">Previous</Button>
                         </Link>
                         <Link v-if="categoryProps.categories.next_page_url" :href="categoryProps.categories.next_page_url">
-                            <Button variant="outline">Siguiente</Button>
+                            <Button variant="outline">Next</Button>
                         </Link>
                     </div>
                 </div>
