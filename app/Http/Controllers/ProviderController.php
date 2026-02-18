@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Provider;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ProviderController extends Controller
 {
@@ -12,7 +13,9 @@ class ProviderController extends Controller
      */
     public function index()
     {
-        //
+        return Inertia::render('providers/index', [
+            'providers' => Provider::latest()->paginate(5)
+        ]);
     }
 
     /**
@@ -20,7 +23,7 @@ class ProviderController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('providers/create');
     }
 
     /**
@@ -28,7 +31,17 @@ class ProviderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'company_name' => 'required|string|max:255',
+            'contact_name' => 'nullable|string|max:255',
+            'phone_number' => 'nullable|string|max:20',
+            'email' => 'required|email|max:255|unique:providers,email',
+            'address' => 'nullable|string|max:255',
+        ]);
+
+        Provider::create($request->all());
+
+        return redirect()->route('providers.index')->with('success', 'Provider created successfully.');
     }
 
     /**
@@ -44,7 +57,9 @@ class ProviderController extends Controller
      */
     public function edit(Provider $provider)
     {
-        //
+        return Inertia::render('providers/edit', [
+            'provider' => $provider
+        ]);
     }
 
     /**
@@ -52,7 +67,17 @@ class ProviderController extends Controller
      */
     public function update(Request $request, Provider $provider)
     {
-        //
+        $request->validate([
+            'company_name' => 'required|string|max:255',
+            'contact_name' => 'nullable|string|max:255',
+            'phone_number' => 'nullable|string|max:20',
+            'email' => 'required|email|max:255|unique:providers,email,' . $provider->id,
+            'address' => 'nullable|string|max:255',
+        ]);
+
+        $provider->update($request->all());
+
+        return redirect()->route('providers.index')->with('success', 'Provider updated successfully.');
     }
 
     /**
@@ -60,6 +85,8 @@ class ProviderController extends Controller
      */
     public function destroy(Provider $provider)
     {
-        //
+        $provider->delete();
+
+        return redirect()->route('providers.index')->with('success', 'Provider deleted successfully.');
     }
 }
