@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
+use App\Models\Product;
+use App\Models\Provider;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -13,8 +16,11 @@ class StockController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Stock/Index', [
-            'stocks' => Stock::all()
+        return Inertia::render('stocks/index', [
+            'stocks' => Stock::query()
+                ->with(['provider', 'product', 'client'])
+                ->latest()
+                ->paginate(8),
         ]);
     }
 
@@ -23,7 +29,20 @@ class StockController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('stocks/create', [
+            'products' => Product::query()
+                ->select('id', 'name')
+                ->orderBy('name')
+                ->get(),
+            'providers' => Provider::query()
+                ->select('id', 'company_name')
+                ->orderBy('company_name')
+                ->get(),
+            'clients' => Client::query()
+                ->select('id', 'name')
+                ->orderBy('name')
+                ->get(),
+        ]);
     }
 
     /**
@@ -47,7 +66,21 @@ class StockController extends Controller
      */
     public function edit(Stock $stock)
     {
-        //
+        return Inertia::render('stocks/edit', [
+            'stock' => $stock,
+            'products' => Product::query()
+                ->select('id', 'name')
+                ->orderBy('name')
+                ->get(),
+            'providers' => Provider::query()
+                ->select('id', 'company_name')
+                ->orderBy('company_name')
+                ->get(),
+            'clients' => Client::query()
+                ->select('id', 'name')
+                ->orderBy('name')
+                ->get(),
+        ]);
     }
 
     /**

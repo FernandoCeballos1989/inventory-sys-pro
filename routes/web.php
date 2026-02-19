@@ -4,6 +4,7 @@ use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProviderController;
+use App\Http\Controllers\StockController;
 use App\Models\Provider;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -25,7 +26,7 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resource('clients', ClientController::class);
     Route::resource('providers', ProviderController::class);
     Route::resource('products', ProductController::class);
-    Route::resource('providers', ProviderController::class);
+    Route::resource('stocks', StockController::class);
 });
 
 require __DIR__ . '/settings.php';
