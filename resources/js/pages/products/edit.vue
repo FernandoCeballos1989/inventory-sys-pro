@@ -6,8 +6,14 @@ import { type BreadcrumbItem } from '@/types';
 import products from '@/routes/products';
 import ProductForm from '@/components/Product/Form.vue';
 
+type Category = {
+    id: number;
+    name: string;
+};
+
 type Product = {
     id: number;
+    category_id: number | null;
     sku: string;
     name: string;
     selling_price: number;
@@ -18,6 +24,7 @@ type Product = {
 
 const props = defineProps<{
     product: Product;
+    categories: Category[];
 }>();
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -42,6 +49,7 @@ const breadcrumbs: BreadcrumbItem[] = [
             <div class="w-12/12 justify-center">
                 <ProductForm
                     :updating="true"
+                    :categories="props.categories"
                     :product="{ ...props.product, warehouse_location: props.product.warehouse_location ?? '' }"
                 />
             </div>

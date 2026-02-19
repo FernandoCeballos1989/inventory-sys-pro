@@ -6,6 +6,15 @@ import ProductForm from '@/components/Product/Form.vue';
 import { type BreadcrumbItem } from '@/types';
 import products from '@/routes/products';
 
+type Category = {
+    id: number;
+    name: string;
+};
+
+const props = defineProps<{
+    categories: Category[];
+}>();
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Products',
@@ -27,7 +36,7 @@ const breadcrumbs: BreadcrumbItem[] = [
             </div>
 
             <div class="w-10/12 justify-center">
-                <ProductForm :updating="false" />
+                <ProductForm :updating="false" :categories="props.categories" />
             </div>
         </div>
     </AppLayout>

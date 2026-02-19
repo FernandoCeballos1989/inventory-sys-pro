@@ -8,6 +8,7 @@ import products from '@/routes/products';
 
 type ProductFormData = {
     id?: number;
+    category_id: number | null;
     sku: string;
     name: string;
     selling_price: number;
@@ -16,14 +17,22 @@ type ProductFormData = {
     warehouse_location?: string;
 };
 
+type CategoryOption = {
+    id: number;
+    name: string;
+};
+
 const props = withDefaults(defineProps<{
     updating: boolean;
+    categories: CategoryOption[];
     product?: ProductFormData | null;
 }>(), {
     product: null,
+    categories: () => [],
 });
 
 const form = useForm({
+    category_id: props.product?.category_id ?? null,
     sku: props.product?.sku ?? '',
     name: props.product?.name ?? '',
     selling_price: props.product?.selling_price ?? 0,
@@ -47,6 +56,24 @@ const submit = () => {
 <template>
     <form class="space-y-4 rounded-lg border p-4" @submit.prevent="submit">
         <div class="space-y-2">
+            <Label for="category_id">Category</Label>
+            <select
+                id="category_id"
+                v-model="form.category_id"
+                class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
+            >
+                <option :value="null" disabled>Select a category</option>
+                <option
+                    v-for="category in props.categories"
+                    :key="category.id"
+                    :value="category.id"
+                >
+                    {{ category.name }}
+                </option>
+            </select>
+            <p v-if="form.errors.category_id" class="text-sm text-red-500">{{ form.errors.category_id }}</p>
+        </div>
+        <div class="space-y-2">
             <Label for="sku">SKU</Label>
             <Input id="sku" v-model="form.sku" type="text"
                 placeholder="SKU of the product" />
@@ -61,6 +88,8 @@ const submit = () => {
         <div class="space-y-2">
             <Label for="selling_price">Selling Price</Label>
             <Input id="selling_price" v-model="form.selling_price" type="number"
+                step="0.01"
+                min="0"
                 placeholder="Selling price of the product" />
             <p v-if="form.errors.selling_price" class="text-sm text-red-500">{{ form.errors.selling_price }}</p>
         </div>

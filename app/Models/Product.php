@@ -21,6 +21,13 @@ class Product extends Model
         'category_id',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'selling_price' => 'decimal:2',
+        ];
+    }
+
     /**
      * Relación: Un producto pertenece a una categoría.
      */
