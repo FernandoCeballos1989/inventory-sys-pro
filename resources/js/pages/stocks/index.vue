@@ -62,6 +62,12 @@ const confirmDelete = (event: MouseEvent) => {
     }
 };
 
+const counterpartyName = (stock: Stock) => {
+    if (stock.type === 'in') return stock.provider?.company_name ?? 'N/A';
+    if (stock.type === 'out') return stock.client?.name ?? 'N/A';
+    return 'N/A';
+};
+
 </script>
 
 <template>
@@ -84,8 +90,7 @@ const confirmDelete = (event: MouseEvent) => {
                             <TableHead>Type</TableHead>
                             <TableHead>Quantity</TableHead>
                             <TableHead>Price</TableHead>
-                            <TableHead>Provider</TableHead>
-                            <TableHead>Client</TableHead>
+                            <TableHead>Provider / Client</TableHead>
                             <TableHead class="text-right">
                                 Actions
                             </TableHead>
@@ -99,8 +104,7 @@ const confirmDelete = (event: MouseEvent) => {
                             <TableCell>{{ stock.type }}</TableCell>
                             <TableCell>{{ stock.quantity }}</TableCell>
                             <TableCell>{{ stock.price ?? 'N/A' }}</TableCell>
-                            <TableCell>{{ stock.provider?.company_name ?? 'N/A' }}</TableCell>
-                            <TableCell>{{ stock.client?.name ?? 'N/A' }}</TableCell>
+                            <TableCell>{{ counterpartyName(stock) }}</TableCell>
                             <TableCell class="text-right">
                                 <Link :href="stocks.edit(stock.id).url">
                                     <Button variant="outline">Edit</Button>

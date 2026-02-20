@@ -68,7 +68,7 @@ const confirmDelete = (event: MouseEvent) => {
                             <TableHead class="w-[100px]">
                                 Name
                             </TableHead>
-                            <TableHead>Email</TableHead>
+                            <TableHead>Contact</TableHead>
                             <TableHead>Phone</TableHead>
                             <TableHead class="text-right">
                                 Actions

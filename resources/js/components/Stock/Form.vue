@@ -71,17 +71,10 @@ const submit = () => {
     <form class="space-y-4 rounded-lg border p-4" @submit.prevent="submit">
         <div class="space-y-2">
             <Label for="product_id">Product</Label>
-            <select
-                id="product_id"
-                v-model="form.product_id"
-                class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
-            >
+            <select id="product_id" v-model="form.product_id"
+                class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50">
                 <option :value="null" disabled>Select a product</option>
-                <option
-                    v-for="product in props.products"
-                    :key="product.id"
-                    :value="product.id"
-                >
+                <option v-for="product in props.products" :key="product.id" :value="product.id">
                     {{ product.name }}
                 </option>
             </select>
@@ -89,17 +82,10 @@ const submit = () => {
         </div>
         <div class="space-y-2">
             <Label for="provider_id">Provider</Label>
-            <select
-                id="provider_id"
-                v-model="form.provider_id"
-                class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
-            >
+            <select id="provider_id" v-model="form.provider_id"
+                class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50">
                 <option :value="null">No provider</option>
-                <option
-                    v-for="provider in props.providers"
-                    :key="provider.id"
-                    :value="provider.id"
-                >
+                <option v-for="provider in props.providers" :key="provider.id" :value="provider.id">
                     {{ provider.company_name }}
                 </option>
             </select>
@@ -107,17 +93,10 @@ const submit = () => {
         </div>
         <div class="space-y-2">
             <Label for="client_id">Client</Label>
-            <select
-                id="client_id"
-                v-model="form.client_id"
-                class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
-            >
+            <select id="client_id" v-model="form.client_id"
+                class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50">
                 <option :value="null">No client</option>
-                <option
-                    v-for="client in props.clients"
-                    :key="client.id"
-                    :value="client.id"
-                >
+                <option v-for="client in props.clients" :key="client.id" :value="client.id">
                     {{ client.name }}
                 </option>
             </select>
@@ -125,11 +104,8 @@ const submit = () => {
         </div>
         <div class="space-y-2">
             <Label for="type">Type</Label>
-            <select
-                id="type"
-                v-model="form.type"
-                class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50"
-            >
+            <select id="type" v-model="form.type"
+                class="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs transition-[color,box-shadow] outline-none disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50">
                 <option value="in">In</option>
                 <option value="out">Out</option>
                 <option value="adjustment">Adjustment</option>
@@ -138,23 +114,17 @@ const submit = () => {
         </div>
         <div class="space-y-2">
             <Label for="quantity">Quantity</Label>
-            <Input id="quantity" v-model="form.quantity" type="number"
-                min="1"
-                placeholder="Quantity" />
+            <Input id="quantity" v-model="form.quantity" type="number" min="1" placeholder="Quantity" />
             <p v-if="form.errors.quantity" class="text-sm text-red-500">{{ form.errors.quantity }}</p>
         </div>
         <div class="space-y-2">
             <Label for="price">Price</Label>
-            <Input id="price" v-model="form.price" type="number"
-                step="0.01"
-                min="0"
-                placeholder="Operation price" />
+            <Input id="price" v-model="form.price" type="number" step="0.01" min="0" placeholder="Operation price" />
             <p v-if="form.errors.price" class="text-sm text-red-500">{{ form.errors.price }}</p>
         </div>
         <div class="space-y-2">
             <Label for="remarks">Remarks</Label>
-            <Input id="remarks" v-model="form.remarks" type="text"
-                placeholder="Optional remarks" />
+            <Input id="remarks" v-model="form.remarks" type="text" placeholder="Optional remarks" />
             <p v-if="form.errors.remarks" class="text-sm text-red-500">{{ form.errors.remarks }}</p>
         </div>
         <div class="flex justify-end">

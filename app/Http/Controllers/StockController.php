@@ -50,7 +50,19 @@ class StockController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'provider_id' => 'nullable|exists:providers,id',
+            'client_id' => 'nullable|exists:clients,id',
+            'type' => 'required|in:in,out',
+            'quantity' => 'required|integer|min:1',
+            'price' => 'required|numeric|min:0',
+            'remarks' => 'nullable|string|max:255',
+        ]);
+
+        Stock::create($request->all());
+
+        return redirect()->route('stocks.index')->with('success', 'Stock created successfully.');
     }
 
     /**
