@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
+import { onBeforeUnmount, ref, watch } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { type BreadcrumbItem } from '@/types';
 import products from '@/routes/products';
 import {
@@ -39,7 +41,29 @@ type ProductPagination = {
 
 const productProps = defineProps<{
     products: ProductPagination;
+    filters: {
+        search?: string | null;
+    };
 }>();
+
+const search = ref(productProps.filters?.search ?? '');
+let searchTimeout: ReturnType<typeof setTimeout> | null = null;
+
+watch(search, (value) => {
+    if (searchTimeout) clearTimeout(searchTimeout);
+
+    searchTimeout = setTimeout(() => {
+        router.get(
+            products.index().url,
+            { search: value || undefined },
+            { preserveState: true, preserveScroll: true, replace: true },
+        );
+    }, 300);
+});
+
+onBeforeUnmount(() => {
+    if (searchTimeout) clearTimeout(searchTimeout);
+});
 
 
 const confirmDelete = (event: MouseEvent) => {
@@ -62,6 +86,9 @@ const confirmDelete = (event: MouseEvent) => {
                 </Link>
             </div>
             <div class="w-10/12 justify-center">
+                <div class="mb-4 w-full md:w-1/3">
+                    <Input v-model="search" placeholder="Search by SKU, name or category..." />
+                </div>
                 <Table>
                     <TableCaption>A list of your recent Products.</TableCaption>
                     <TableHeader>
@@ -98,12 +125,10 @@ const confirmDelete = (event: MouseEvent) => {
                         Página {{ productProps.products.current_page }} de {{ productProps.products.last_page }}
                     </p>
                     <div class="flex gap-2">
-                        <Link v-if="productProps.products.prev_page_url"
-                            :href="productProps.products.prev_page_url">
+                        <Link v-if="productProps.products.prev_page_url" :href="productProps.products.prev_page_url">
                             <Button variant="outline">Previous</Button>
                         </Link>
-                        <Link v-if="productProps.products.next_page_url"
-                            :href="productProps.products.next_page_url">
+                        <Link v-if="productProps.products.next_page_url" :href="productProps.products.next_page_url">
                             <Button variant="outline">Next</Button>
                         </Link>
                     </div>

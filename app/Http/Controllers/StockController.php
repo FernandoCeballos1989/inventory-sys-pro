@@ -14,14 +14,43 @@ class StockController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $validated = $request->validate([
+            'search' => ['nullable', 'string', 'max:100'],
+        ]);
+        $search = trim((string) ($validated['search'] ?? ''));
+        $escapedSearch = $this->escapeLike($search);
+
         return Inertia::render('stocks/index', [
             'stocks' => Stock::query()
                 ->with(['provider', 'product', 'client'])
+                ->when($search, function ($query) use ($escapedSearch) {
+                    $query
+                        ->where('type', 'like', "%{$escapedSearch}%")
+                        ->orWhereHas('product', function ($q) use ($escapedSearch) {
+                            $q->where('sku', 'like', "%{$escapedSearch}%")
+                                ->orWhere('name', 'like', "%{$escapedSearch}%");
+                        })
+                        ->orWhereHas('provider', function ($q) use ($escapedSearch) {
+                            $q->where('company_name', 'like', "%{$escapedSearch}%");
+                        })
+                        ->orWhereHas('client', function ($q) use ($escapedSearch) {
+                            $q->where('name', 'like', "%{$escapedSearch}%");
+                        });
+                })
                 ->latest()
-                ->paginate(8),
+                ->paginate(8)
+                ->withQueryString(),
+            'filters' => [
+                'search' => $search,
+            ],
         ]);
+    }
+
+    private function escapeLike(string $value): string
+    {
+        return str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $value);
     }
 
     /**

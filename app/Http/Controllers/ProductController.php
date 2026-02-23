@@ -12,11 +12,37 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('products/index', [
-            'products' => Product::with('category')->latest()->paginate(5)
+        $validated = $request->validate([
+            'search' => ['nullable', 'string', 'max:100'],
         ]);
+        $search = trim((string) ($validated['search'] ?? ''));
+        $escapedSearch = $this->escapeLike($search);
+
+        return Inertia::render('products/index', [
+            'products' => Product::query()
+                ->with('category')
+                ->when($search, function ($query) use ($escapedSearch) {
+                    $query
+                        ->where('sku', 'like', "%{$escapedSearch}%")
+                        ->orWhere('name', 'like', "%{$escapedSearch}%")
+                        ->orWhereHas('category', function ($categoryQuery) use ($escapedSearch) {
+                            $categoryQuery->where('name', 'like', "%{$escapedSearch}%");
+                        });
+                })
+                ->latest()
+                ->paginate(5)
+                ->withQueryString(),
+            'filters' => [
+                'search' => $search,
+            ],
+        ]);
+    }
+
+    private function escapeLike(string $value): string
+    {
+        return str_replace(['\\', '%', '_'], ['\\\\', '\\%', '\\_'], $value);
     }
 
     /**
