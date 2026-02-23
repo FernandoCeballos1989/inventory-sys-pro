@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'password' => bcrypt('Pa$$w0rd!'), // Cambia esto por una contraseña segura
         ]);
         $this->call([
             CategorySeeder::class,  // 1. Primero las categorías
