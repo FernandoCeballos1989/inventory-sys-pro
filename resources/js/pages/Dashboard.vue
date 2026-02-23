@@ -79,58 +79,66 @@ const netFlowMonth = props.kpis.incoming_units_month - props.kpis.outgoing_units
         <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
             <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                 <Card>
-                    <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardDescription>Total inventory value</CardDescription>
-                        <Warehouse class="h-4 w-4 text-muted-foreground" />
+                    <CardHeader class="pb-2">
+                        <div class="flex items-center gap-2">
+                            <Warehouse class="h-5 w-5 text-black" />
+                            <CardDescription class="text-base font-semibold text-black">Total inventory value</CardDescription>
+                        </div>
                     </CardHeader>
                     <CardContent>
-                        <CardTitle class="text-2xl">{{ formatCurrency(props.kpis.inventory_value) }}</CardTitle>
-                        <p class="text-xs text-muted-foreground">
+                        <CardTitle class="text-2xl font-semibold text-black">{{ formatCurrency(props.kpis.inventory_value) }}</CardTitle>
+                        <p class="text-sm font-normal text-zinc-700">
                             {{ formatNumber(props.kpis.inventory_units) }} units in stock
                         </p>
                     </CardContent>
                 </Card>
 
                 <Card>
-                    <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardDescription>Products under minimum</CardDescription>
-                        <PackageSearch class="h-4 w-4 text-muted-foreground" />
+                    <CardHeader class="pb-2">
+                        <div class="flex items-center gap-2">
+                            <PackageSearch class="h-5 w-5 text-black" />
+                            <CardDescription class="text-base font-semibold text-black">Products under minimum</CardDescription>
+                        </div>
                     </CardHeader>
                     <CardContent>
-                        <CardTitle class="text-2xl">{{ formatNumber(props.kpis.low_stock_count) }}</CardTitle>
-                        <p class="text-xs text-muted-foreground">
+                        <CardTitle class="text-2xl font-semibold text-black">{{ formatNumber(props.kpis.low_stock_count) }}</CardTitle>
+                        <p class="text-sm font-normal text-zinc-700">
                             From {{ formatNumber(props.kpis.total_products) }} active products
                         </p>
                     </CardContent>
                 </Card>
 
                 <Card>
-                    <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardDescription>Monthly inbound / outbound</CardDescription>
-                        <TrendingUp class="h-4 w-4 text-muted-foreground" />
+                    <CardHeader class="pb-2">
+                        <div class="flex items-center gap-2">
+                            <TrendingUp class="h-5 w-5 text-black" />
+                            <CardDescription class="text-base font-semibold text-black">Monthly inbound / outbound</CardDescription>
+                        </div>
                     </CardHeader>
                     <CardContent>
-                        <CardTitle class="text-2xl">
+                        <CardTitle class="text-2xl font-semibold text-black">
                             {{ formatNumber(props.kpis.incoming_units_month) }} / {{ formatNumber(props.kpis.outgoing_units_month) }}
                         </CardTitle>
-                        <p class="text-xs text-muted-foreground">
+                        <p class="text-sm font-normal text-zinc-700">
                             Period {{ props.kpis.period.start }} to {{ props.kpis.period.end }}
                         </p>
                     </CardContent>
                 </Card>
 
                 <Card>
-                    <CardHeader class="flex flex-row items-center justify-between space-y-0 pb-2">
-                        <CardDescription>Net flow this month</CardDescription>
-                        <Boxes class="h-4 w-4 text-muted-foreground" />
+                    <CardHeader class="pb-2">
+                        <div class="flex items-center gap-2">
+                            <Boxes class="h-5 w-5 text-black" />
+                            <CardDescription class="text-base font-semibold text-black">Net flow this month</CardDescription>
+                        </div>
                     </CardHeader>
                     <CardContent>
-                        <CardTitle class="text-2xl">{{ formatNumber(netFlowMonth) }} units</CardTitle>
+                        <CardTitle class="text-2xl font-semibold text-black">{{ formatNumber(netFlowMonth) }} units</CardTitle>
                         <div class="mt-1 flex items-center gap-2">
                             <Badge :variant="netFlowMonth >= 0 ? 'default' : 'destructive'">
                                 {{ netFlowMonth >= 0 ? 'Positive' : 'Negative' }}
                             </Badge>
-                            <span class="text-xs text-muted-foreground">
+                            <span class="text-sm font-normal text-zinc-700">
                                 {{ formatNumber(props.kpis.total_providers) }} providers / {{ formatNumber(props.kpis.total_clients) }} clients
                             </span>
                         </div>
