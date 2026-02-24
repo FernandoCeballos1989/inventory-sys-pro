@@ -10,6 +10,9 @@
 /resources/js/routes
 /resources/js/wayfinder
 /vendor
+/database/database.sqlite
+/database/demos/demo_*.sqlite
+/database/demos/master.sqlite
 .DS_Store
 .env
 .env.backup
