@@ -67,8 +67,7 @@ Si deseas auditar el código o probarlo en tu entorno:
   npm run dev
   php artisan serve
 
-
-📄 Licencia
+## 📄 Licencia
 Este proyecto es una pieza de portfolio. Todos los derechos están reservados. El código está disponible para su revisión técnica, pero está prohibida su redistribución o uso comercial sin permiso expreso del autor.
 
 Desarrollado con ❤️ por Fernando Ceballos Carreras.
