@@ -79,7 +79,7 @@ withDefaults(
 
             <main class="flex flex-1 flex-col justify-center">
                 <section class="relative mt-10 grid items-center gap-10 lg:mt-14 lg:grid-cols-2">
-                    <div class="absolute -inset-x-10 -top-20 -z-10 h-72 bg-gradient-to-b from-[#f0e4d7] to-transparent blur-2xl dark:from-[#111111]" />
+                    <div class="absolute -inset-x-10 -top-20 -z-10 h-72 bg-linear-to-b from-[#f0e4d7] to-transparent blur-2xl dark:from-[#111111]" />
 
                     <div class="opacity-100 transition-all duration-700 starting:translate-y-2 starting:opacity-0">
                         <p class="inline-flex items-center rounded-full border border-black/10 bg-white/70 px-3 py-1 text-xs font-medium text-black/70 backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-white/70">
