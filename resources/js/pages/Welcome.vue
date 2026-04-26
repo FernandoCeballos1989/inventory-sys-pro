@@ -264,12 +264,11 @@ withDefaults(
                 <footer
                     class="mt-16 flex flex-col items-start justify-between gap-3 border-t border-black/10 pt-6 text-sm text-black/60 md:flex-row md:items-center dark:border-white/10 dark:text-white/60"
                 >
-                    <a
-                        href="mailto:dev@inventorysys.pro"
+                    <span
                         class="transition hover:text-black dark:hover:text-white"
                     >
-                        fernandoceballos1989@gmail.com
-                    </a>
+                        Inventory System Pro — a Shorai-Lab App
+                    </span>
                     <div class="flex items-center gap-4">
                         <a
                             href="https://www.linkedin.com/in/fernando-ceballos-carreras-920825397/"
@@ -278,22 +277,6 @@ withDefaults(
                             class="transition hover:text-black dark:hover:text-white"
                         >
                             LinkedIn
-                        </a>
-                        <a
-                            href="https://github.com/FernandoCeballos1989"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="transition hover:text-black dark:hover:text-white"
-                        >
-                            GitHub
-                        </a>
-                        <a
-                            href="https://your-portfolio.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="transition hover:text-black dark:hover:text-white"
-                        >
-                            Portfolio
                         </a>
                     </div>
                 </footer>

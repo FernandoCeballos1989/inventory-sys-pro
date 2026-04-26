@@ -168,9 +168,7 @@ const netFlowMonth =
                         <CardTitle
                             class="text-2xl font-semibold text-black dark:text-white"
                         >
-                            {{
-                                formatNumber(props.kpis.incoming_units_month)
-                            }}
+                            {{ formatNumber(props.kpis.incoming_units_month) }}
                             /
                             {{ formatNumber(props.kpis.outgoing_units_month) }}
                         </CardTitle>
@@ -213,13 +211,9 @@ const netFlowMonth =
                             <span
                                 class="text-sm font-normal text-zinc-700 dark:text-white"
                             >
-                                {{
-                                    formatNumber(props.kpis.total_providers)
-                                }}
+                                {{ formatNumber(props.kpis.total_providers) }}
                                 providers /
-                                {{
-                                    formatNumber(props.kpis.total_clients)
-                                }}
+                                {{ formatNumber(props.kpis.total_clients) }}
                                 clients
                             </span>
                         </div>
