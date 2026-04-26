@@ -10,13 +10,6 @@ RUN apk add --no-cache \
     nodejs \
     npm
 
-RUN set -e; \
-    apk add --no-cache --virtual .build-deps \
-        $PHPIZE_DEPS \
-        sqlite-dev \
-    && docker-php-ext-install pdo_sqlite sqlite3 \
-    && apk del .build-deps
-
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 COPY docker/php/php.ini /usr/local/etc/php/conf.d/zz-app.ini
