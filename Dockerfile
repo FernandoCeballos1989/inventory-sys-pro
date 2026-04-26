@@ -1,19 +1,3 @@
-FROM node:22-alpine AS frontend
-
-WORKDIR /var/www/html
-
-RUN corepack enable
-
-COPY package.json package-lock.json ./
-RUN npm ci
-
-COPY resources/ resources/
-COPY vite.config.ts tsconfig.json components.json ./
-COPY public/ public/
-
-RUN npm run build
-
-
 FROM php:8.4-fpm-alpine AS app
 
 RUN apk add --no-cache \
@@ -22,7 +6,9 @@ RUN apk add --no-cache \
     bash \
     curl \
     sqlite-libs \
-    oniguruma
+    oniguruma \
+    nodejs \
+    npm
 
 RUN set -e; \
     apk add --no-cache --virtual .build-deps \
@@ -42,16 +28,20 @@ WORKDIR /var/www/html
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-progress
 
-COPY --from=frontend /var/www/html/public/build /var/www/html/public/build
-COPY . .
-COPY docker/entrypoint.sh /entrypoint.sh
+COPY package.json package-lock.json ./
+RUN npm ci
 
-RUN mkdir -p storage/logs storage/framework/sessions storage/framework/views storage/framework/cache/data \
-    storage/app/private storage/app/public bootstrap/cache database/demos \
-    && ln -sf ../storage/app/public public/storage \
-    && chmod +x /entrypoint.sh \
+COPY . .
+
+RUN npm run build \
+    && php artisan storage:link 2>/dev/null || ln -sf ../storage/app/public public/storage \
+    && mkdir -p storage/logs storage/framework/sessions storage/framework/views storage/framework/cache/data \
+        storage/app/private storage/app/public bootstrap/cache database/demos \
     && chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache database
+
+COPY docker/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 80
 
