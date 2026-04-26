@@ -18,6 +18,10 @@ class DemoSandbox
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (app()->isProduction()) {
+            return $next($request);
+        }
+
         // 1. Obtener ID de sesión (asegúrate de que la sesión esté iniciada)
         $sessionId = session()->getId();
 
