@@ -9,15 +9,17 @@ git pull origin main
 echo ">>> Rebuilding containers..."
 docker compose -f compose.yaml -f compose.prod.yaml up -d --build
 
+echo ">>> Waiting for container to be healthy..."
+until docker compose exec -T laravel.test curl -sf http://127.0.0.1:80/up > /dev/null 2>&1; do
+    sleep 2
+done
+
 echo ">>> Running migrations..."
 docker compose exec -T laravel.test php artisan migrate --force
 
 echo ">>> Clearing and re-caching config..."
 docker compose exec -T laravel.test php artisan optimize:clear
-docker compose exec -T laravel.test php artisan config:cache
-
-echo ">>> Restarting..."
-docker compose restart laravel.test
+docker compose exec -T laravel.test php artisan optimize
 
 echo ""
 echo ">>> Deploy complete!"
