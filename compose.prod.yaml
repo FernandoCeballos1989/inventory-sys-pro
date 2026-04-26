@@ -1,0 +1,10 @@
+# Production overrides — use with: docker compose -f compose.yaml -f compose.prod.yaml up -d --build
+services:
+    laravel.test:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        environment:
+            APP_ENV: production
+            APP_DEBUG: "false"
+        restart: always
