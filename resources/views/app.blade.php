@@ -32,7 +32,7 @@
 
         <title inertia>{{ config('app.name', 'Inventory System Pro') }}</title>
 
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+        <link rel="icon" href="/favicon.svg?v={{ config('app.version', '1.0.0') }}" type="image/svg+xml">
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />

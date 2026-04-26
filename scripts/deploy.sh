@@ -4,7 +4,8 @@ set -e
 cd "$(dirname "$0")/.."
 
 echo ">>> Pulling latest code..."
-git pull origin main
+git fetch origin main
+git reset --hard origin/main
 
 echo ">>> Rebuilding containers (no cache)..."
 docker compose -f compose.yaml -f compose.prod.yaml build --no-cache
