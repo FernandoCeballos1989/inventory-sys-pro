@@ -8,16 +8,23 @@ echo "  Creating backup directory..."
 sudo mkdir -p /srv/backups/inventory-sys-pro
 sudo chown -R ubuntu:ubuntu /srv/backups/inventory-sys-pro
 
-# --- Crontab entries ---
-echo "  Adding crontab entries..."
+# --- Crontab entries (must run as ubuntu user, not root) ---
+CRON_USER="${SUDO_USER:-$(whoami)}"
+echo "  Adding crontab entries for user ${CRON_USER}..."
 CRON_BACKUP="30 3 * * * /srv/apps/inventory-sys-pro/scripts/backup.sh >> /srv/backups/inventory-sys-pro/backup-cron.log 2>&1"
 CRON_HEALTH="*/5 * * * * /srv/apps/inventory-sys-pro/scripts/healthcheck.sh >> /srv/backups/inventory-sys-pro/healthcheck-cron.log 2>&1"
 
-(crontab -l 2>/dev/null | grep -v "inventory-sys-pro/scripts/backup.sh" || true; echo "$CRON_BACKUP") | crontab -
-(crontab -l 2>/dev/null | grep -v "inventory-sys-pro/scripts/healthcheck.sh" || true; echo "$CRON_HEALTH") | crontab -
-
-echo "  Current crontab:"
-crontab -l
+if [ "$(id -un)" = "root" ] && [ -n "${SUDO_USER}" ]; then
+    (sudo -u "${SUDO_USER}" crontab -l 2>/dev/null | grep -v "inventory-sys-pro/scripts/backup.sh" || true; echo "$CRON_BACKUP") | sudo -u "${SUDO_USER}" crontab -
+    (sudo -u "${SUDO_USER}" crontab -l 2>/dev/null | grep -v "inventory-sys-pro/scripts/healthcheck.sh" || true; echo "$CRON_HEALTH") | sudo -u "${SUDO_USER}" crontab -
+    echo "  Current crontab (${CRON_USER}):"
+    sudo -u "${SUDO_USER}" crontab -l
+else
+    (crontab -l 2>/dev/null | grep -v "inventory-sys-pro/scripts/backup.sh" || true; echo "$CRON_BACKUP") | crontab -
+    (crontab -l 2>/dev/null | grep -v "inventory-sys-pro/scripts/healthcheck.sh" || true; echo "$CRON_HEALTH") | crontab -
+    echo "  Current crontab:"
+    crontab -l
+fi
 
 # --- UFW deny rule for port 10011 ---
 echo "  Adding UFW deny rule for port 10011..."
