@@ -25,7 +25,7 @@ class DemoSandbox
         $userDbPath = database_path("demos/demo_{$sessionId}.sqlite");
 
         // 2. Si no existe la copia para este usuario, la creamos desde el maestro
-        if (!File::exists($userDbPath) && File::exists($masterPath)) {
+        if (! File::exists($userDbPath) && File::exists($masterPath)) {
             File::copy($masterPath, $userDbPath);
         }
 
@@ -35,6 +35,7 @@ class DemoSandbox
             DB::purge('sqlite');
             DB::reconnect('sqlite');
         }
+
         return $next($request);
     }
 }

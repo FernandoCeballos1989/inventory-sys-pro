@@ -1,11 +1,8 @@
 <script setup lang="ts">
 import { Head, Link, router } from '@inertiajs/vue3';
 import { ref, watch, onBeforeUnmount } from 'vue';
-import AppLayout from '@/layouts/AppLayout.vue';
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { type BreadcrumbItem } from '@/types';
-import stocks from '@/routes/stocks';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import {
     Table,
     TableBody,
@@ -14,13 +11,15 @@ import {
     TableHead,
     TableHeader,
     TableRow,
-} from '@/components/ui/table'
-
+} from '@/components/ui/table';
+import AppLayout from '@/layouts/AppLayout.vue';
+import stocksRoute from '@/routes/stocks';
+import { type BreadcrumbItem } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'stocks',
-        href: stocks.index().url,
+        href: stocksRoute.index().url,
     },
 ];
 
@@ -68,7 +67,7 @@ watch(search, (value) => {
 
     searchTimeout = setTimeout(() => {
         router.get(
-            stocks.index().url,
+            stocksRoute.index().url,
             { search: value || undefined },
             { preserveState: true, preserveScroll: true, replace: true },
         );
@@ -78,7 +77,6 @@ watch(search, (value) => {
 onBeforeUnmount(() => {
     if (searchTimeout) clearTimeout(searchTimeout);
 });
-
 
 const confirmDelete = (event: MouseEvent) => {
     if (!window.confirm('Are you sure you want to delete this Stock?')) {
@@ -91,17 +89,17 @@ const counterpartyName = (stock: Stock) => {
     if (stock.type === 'out') return stock.client?.name ?? 'N/A';
     return 'N/A';
 };
-
 </script>
 
 <template>
-
     <Head title="Stocks" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+        <div
+            class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
+        >
             <div class="w-1/3">
-                <Link :href="stocks.create().url">
+                <Link :href="stocksRoute.create().url">
                     <Button>Create Stock</Button>
                 </Link>
             </div>
@@ -121,27 +119,38 @@ const counterpartyName = (stock: Stock) => {
                             <TableHead>Quantity</TableHead>
                             <TableHead>Price</TableHead>
                             <TableHead>Provider / Client</TableHead>
-                            <TableHead class="text-right">
-                                Actions
-                            </TableHead>
+                            <TableHead class="text-right"> Actions </TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        <TableRow v-for="stock in stockProps.stocks.data" :key="stock.id">
+                        <TableRow
+                            v-for="stock in stockProps.stocks.data"
+                            :key="stock.id"
+                        >
                             <TableCell class="font-medium">
-                                {{ stock.product ? `${stock.product.sku} - ${stock.product.name}` : 'N/A' }}
+                                {{
+                                    stock.product
+                                        ? `${stock.product.sku} - ${stock.product.name}`
+                                        : 'N/A'
+                                }}
                             </TableCell>
                             <TableCell>{{ stock.type }}</TableCell>
                             <TableCell>{{ stock.quantity }}</TableCell>
                             <TableCell>{{ stock.price ?? 'N/A' }}</TableCell>
                             <TableCell>{{ counterpartyName(stock) }}</TableCell>
                             <TableCell class="text-right">
-                                <Link :href="stocks.edit(stock.id).url">
+                                <Link :href="stocksRoute.edit(stock.id).url">
                                     <Button variant="outline">Edit</Button>
                                 </Link>
-                                <Link :href="stocks.destroy(stock.id).url" method="delete" class="ml-2"
-                                    @click="confirmDelete">
-                                    <Button variant="destructive">Delete</Button>
+                                <Link
+                                    :href="stocksRoute.destroy(stock.id).url"
+                                    method="delete"
+                                    class="ml-2"
+                                    @click="confirmDelete"
+                                >
+                                    <Button variant="destructive"
+                                        >Delete</Button
+                                    >
                                 </Link>
                             </TableCell>
                         </TableRow>
@@ -149,13 +158,20 @@ const counterpartyName = (stock: Stock) => {
                 </Table>
                 <div class="mt-4 flex items-center justify-between">
                     <p class="text-sm text-muted-foreground">
-                        Página {{ stockProps.stocks.current_page }} de {{ stockProps.stocks.last_page }}
+                        Página {{ stockProps.stocks.current_page }} de
+                        {{ stockProps.stocks.last_page }}
                     </p>
                     <div class="flex gap-2">
-                        <Link v-if="stockProps.stocks.prev_page_url" :href="stockProps.stocks.prev_page_url">
+                        <Link
+                            v-if="stockProps.stocks.prev_page_url"
+                            :href="stockProps.stocks.prev_page_url"
+                        >
                             <Button variant="outline">Previous</Button>
                         </Link>
-                        <Link v-if="stockProps.stocks.next_page_url" :href="stockProps.stocks.next_page_url">
+                        <Link
+                            v-if="stockProps.stocks.next_page_url"
+                            :href="stockProps.stocks.next_page_url"
+                        >
                             <Button variant="outline">Next</Button>
                         </Link>
                     </div>

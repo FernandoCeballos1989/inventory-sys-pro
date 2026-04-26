@@ -19,12 +19,13 @@ FROM php:8.4-fpm-alpine AS app
 RUN apk add --no-cache \
     nginx \
     supervisor \
-    sqlite3 \
-    pdo-sqlite \
     bash \
-    curl
-
-RUN docker-php-ext-install pdo_sqlite sqlite3 pcntl
+    curl \
+    sqlite-libs \
+    && apk add --no-cache --virtual .build-deps \
+    sqlite-dev \
+    && docker-php-ext-install pdo_sqlite sqlite3 pcntl \
+    && apk del .build-deps
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 

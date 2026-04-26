@@ -38,6 +38,7 @@ class CategoryController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
         ]));
+
         return redirect()
             ->route('categories.index')
             ->with('success', 'Category created successfully.');
@@ -70,6 +71,7 @@ class CategoryController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
         ]));
+
         return redirect()
             ->route('categories.index')
             ->with('success', 'Category updated successfully.');

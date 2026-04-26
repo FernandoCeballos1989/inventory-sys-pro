@@ -4,11 +4,11 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
-use Carbon\Carbon;
 
 class CleanDemoDatabases extends Command
 {
     protected $signature = 'demo:clean';
+
     protected $description = 'Borra las BBDD temporales de la demo de más de 24h';
 
     public function handle()

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,12 +12,15 @@ type CategoryFormData = {
     description: string | null;
 };
 
-const props = withDefaults(defineProps<{
-    updating: boolean;
-    category?: CategoryFormData | null;
-}>(), {
-    category: null,
-});
+const props = withDefaults(
+    defineProps<{
+        updating: boolean;
+        category?: CategoryFormData | null;
+    }>(),
+    {
+        category: null,
+    },
+);
 
 const form = useForm({
     name: props.category?.name ?? '',
@@ -40,8 +43,15 @@ const submit = () => {
     <form class="space-y-4 rounded-lg border p-4" @submit.prevent="submit">
         <div class="space-y-2">
             <Label for="name">Name</Label>
-            <Input id="name" v-model="form.name" type="text" placeholder="Name of the category" />
-            <p v-if="form.errors.name" class="text-sm text-red-500">{{ form.errors.name }}</p>
+            <Input
+                id="name"
+                v-model="form.name"
+                type="text"
+                placeholder="Name of the category"
+            />
+            <p v-if="form.errors.name" class="text-sm text-red-500">
+                {{ form.errors.name }}
+            </p>
         </div>
 
         <div class="space-y-2">
@@ -50,10 +60,12 @@ const submit = () => {
                 id="description"
                 v-model="form.description"
                 rows="4"
-                class="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs outline-none ring-offset-background placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring"
+                class="flex w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs ring-offset-background outline-none placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring"
                 placeholder="Description of the category"
             />
-            <p v-if="form.errors.description" class="text-sm text-red-500">{{ form.errors.description }}</p>
+            <p v-if="form.errors.description" class="text-sm text-red-500">
+                {{ form.errors.description }}
+            </p>
         </div>
 
         <div class="flex justify-end">

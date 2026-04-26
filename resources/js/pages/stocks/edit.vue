@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-import AppLayout from '@/layouts/AppLayout.vue';
-import { Button } from '@/components/ui/button';
-import { type BreadcrumbItem } from '@/types';
-import stocks from '@/routes/stocks';
 import StockForm from '@/components/Stock/Form.vue';
+import { Button } from '@/components/ui/button';
+import AppLayout from '@/layouts/AppLayout.vue';
+import stocks from '@/routes/stocks';
+import { type BreadcrumbItem } from '@/types';
 
 type Product = {
     id: number;
@@ -51,7 +51,9 @@ const breadcrumbs: BreadcrumbItem[] = [
     <Head title="Edit Stock" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+        <div
+            class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
+        >
             <div class="w-1/3">
                 <Link :href="stocks.index().url">
                     <Button>Back</Button>

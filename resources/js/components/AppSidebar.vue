@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid, UserRound, Truck, Package, Warehouse } from 'lucide-vue-next';
+import {
+    Folder,
+    LayoutGrid,
+    UserRound,
+    Truck,
+    Package,
+    Warehouse,
+} from 'lucide-vue-next';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
 import {
@@ -12,14 +19,14 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { type NavItem } from '@/types';
-import AppLogo from './AppLogo.vue';
 import { dashboard } from '@/routes';
 import categories from '@/routes/categories';
 import clients from '@/routes/clients';
-import providers from '@/routes/providers';
 import products from '@/routes/products';
+import providers from '@/routes/providers';
 import stocks from '@/routes/stocks';
+import { type NavItem } from '@/types';
+import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
     {
@@ -53,8 +60,6 @@ const mainNavItems: NavItem[] = [
         icon: Warehouse,
     },
 ];
-
-
 </script>
 
 <template>

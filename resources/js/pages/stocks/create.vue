@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { Head, Link } from '@inertiajs/vue3';
-import AppLayout from '@/layouts/AppLayout.vue';
-import { Button } from '@/components/ui/button';
 import StockForm from '@/components/Stock/Form.vue';
-import { type BreadcrumbItem } from '@/types';
+import { Button } from '@/components/ui/button';
+import AppLayout from '@/layouts/AppLayout.vue';
 import stocks from '@/routes/stocks';
+import { type BreadcrumbItem } from '@/types';
 
 type ProductOption = {
     id: number;
@@ -21,7 +21,6 @@ type ClientOption = {
     name: string;
 };
 
-
 const props = defineProps<{
     products: ProductOption[];
     providers: ProviderOption[];
@@ -37,11 +36,12 @@ const breadcrumbs: BreadcrumbItem[] = [
 </script>
 
 <template>
-
     <Head title="Create Stock" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+        <div
+            class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
+        >
             <div class="w-1/3">
                 <Link :href="stocks.index().url">
                     <Button>Back</Button>
@@ -49,8 +49,12 @@ const breadcrumbs: BreadcrumbItem[] = [
             </div>
 
             <div class="w-10/12 justify-center">
-                <StockForm :updating="false" :products="props.products" :providers="props.providers"
-                    :clients="props.clients" />
+                <StockForm
+                    :updating="false"
+                    :products="props.products"
+                    :providers="props.providers"
+                    :clients="props.clients"
+                />
             </div>
         </div>
     </AppLayout>

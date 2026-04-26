@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import { computed } from 'vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -22,14 +22,17 @@ type CategoryOption = {
     name: string;
 };
 
-const props = withDefaults(defineProps<{
-    updating: boolean;
-    categories: CategoryOption[];
-    product?: ProductFormData | null;
-}>(), {
-    product: null,
-    categories: () => [],
-});
+const props = withDefaults(
+    defineProps<{
+        updating: boolean;
+        categories: CategoryOption[];
+        product?: ProductFormData | null;
+    }>(),
+    {
+        product: null,
+        categories: () => [],
+    },
+);
 
 const form = useForm({
     category_id: props.product?.category_id ?? null,
@@ -71,45 +74,86 @@ const submit = () => {
                     {{ category.name }}
                 </option>
             </select>
-            <p v-if="form.errors.category_id" class="text-sm text-red-500">{{ form.errors.category_id }}</p>
+            <p v-if="form.errors.category_id" class="text-sm text-red-500">
+                {{ form.errors.category_id }}
+            </p>
         </div>
         <div class="space-y-2">
             <Label for="sku">SKU</Label>
-            <Input id="sku" v-model="form.sku" type="text"
-                placeholder="SKU of the product" />
-            <p v-if="form.errors.sku" class="text-sm text-red-500">{{ form.errors.sku }}</p>
+            <Input
+                id="sku"
+                v-model="form.sku"
+                type="text"
+                placeholder="SKU of the product"
+            />
+            <p v-if="form.errors.sku" class="text-sm text-red-500">
+                {{ form.errors.sku }}
+            </p>
         </div>
         <div class="space-y-2">
             <Label for="name">Name</Label>
-            <Input id="name" v-model="form.name" type="text"
-                placeholder="Name of the product" />
-            <p v-if="form.errors.name" class="text-sm text-red-500">{{ form.errors.name }}</p>
+            <Input
+                id="name"
+                v-model="form.name"
+                type="text"
+                placeholder="Name of the product"
+            />
+            <p v-if="form.errors.name" class="text-sm text-red-500">
+                {{ form.errors.name }}
+            </p>
         </div>
         <div class="space-y-2">
             <Label for="selling_price">Selling Price</Label>
-            <Input id="selling_price" v-model="form.selling_price" type="number"
+            <Input
+                id="selling_price"
+                v-model="form.selling_price"
+                type="number"
                 step="0.01"
                 min="0"
-                placeholder="Selling price of the product" />
-            <p v-if="form.errors.selling_price" class="text-sm text-red-500">{{ form.errors.selling_price }}</p>
+                placeholder="Selling price of the product"
+            />
+            <p v-if="form.errors.selling_price" class="text-sm text-red-500">
+                {{ form.errors.selling_price }}
+            </p>
         </div>
         <div class="space-y-2">
             <Label for="current_stock">Current Stock</Label>
-            <Input id="current_stock" v-model="form.current_stock" type="number"
-                placeholder="Current stock of the product" />
-            <p v-if="form.errors.current_stock" class="text-sm text-red-500">{{ form.errors.current_stock }}</p>
+            <Input
+                id="current_stock"
+                v-model="form.current_stock"
+                type="number"
+                placeholder="Current stock of the product"
+            />
+            <p v-if="form.errors.current_stock" class="text-sm text-red-500">
+                {{ form.errors.current_stock }}
+            </p>
         </div>
         <div class="space-y-2">
             <Label for="min_stock">Minimum Stock</Label>
-            <Input id="min_stock" v-model="form.min_stock" type="number"
-                placeholder="Minimum stock of the product" />
-            <p v-if="form.errors.min_stock" class="text-sm text-red-500">{{ form.errors.min_stock }}</p>
+            <Input
+                id="min_stock"
+                v-model="form.min_stock"
+                type="number"
+                placeholder="Minimum stock of the product"
+            />
+            <p v-if="form.errors.min_stock" class="text-sm text-red-500">
+                {{ form.errors.min_stock }}
+            </p>
         </div>
         <div class="space-y-2">
             <Label for="warehouse_location">Warehouse Location</Label>
-            <Input id="warehouse_location" v-model="form.warehouse_location" type="text"
-                placeholder="Warehouse location of the product" />
-            <p v-if="form.errors.warehouse_location" class="text-sm text-red-500">{{ form.errors.warehouse_location }}</p>
+            <Input
+                id="warehouse_location"
+                v-model="form.warehouse_location"
+                type="text"
+                placeholder="Warehouse location of the product"
+            />
+            <p
+                v-if="form.errors.warehouse_location"
+                class="text-sm text-red-500"
+            >
+                {{ form.errors.warehouse_location }}
+            </p>
         </div>
         <div class="flex justify-end">
             <Button type="submit" :disabled="form.processing">

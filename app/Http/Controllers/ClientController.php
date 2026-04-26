@@ -41,6 +41,7 @@ class ClientController extends Controller
             'phone' => ['nullable', 'string', 'max:20'],
             'send_address' => ['nullable', 'string'],
         ]));
+
         return redirect()
             ->route('clients.index')
             ->with('success', 'Client created successfully.');
@@ -71,7 +72,7 @@ class ClientController extends Controller
     {
         $client->update($request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'fiscal_code' => ['unique:clients,fiscal_code,' . $client->id, 'string', 'max:255'],
+            'fiscal_code' => ['unique:clients,fiscal_code,'.$client->id, 'string', 'max:255'],
             'email' => ['nullable', 'email', 'max:255'],
             'phone' => ['nullable', 'string', 'max:20'],
             'send_address' => ['nullable', 'string'],
@@ -88,6 +89,7 @@ class ClientController extends Controller
     public function destroy(Client $client)
     {
         $client->delete();
+
         return redirect()
             ->route('clients.index')
             ->with('success', 'Client deleted successfully.');

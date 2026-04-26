@@ -1,10 +1,21 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3';
-import AppLayout from '@/layouts/AppLayout.vue';
-import { type BreadcrumbItem } from '@/types';
-import { dashboard } from '@/routes';
+import {
+    ArrowDownRight,
+    ArrowUpRight,
+    Boxes,
+    PackageSearch,
+    TrendingUp,
+    Warehouse,
+} from 'lucide-vue-next';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/components/ui/card';
 import {
     Table,
     TableBody,
@@ -13,7 +24,9 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { ArrowDownRight, ArrowUpRight, Boxes, PackageSearch, TrendingUp, Warehouse } from 'lucide-vue-next';
+import AppLayout from '@/layouts/AppLayout.vue';
+import { dashboard } from '@/routes';
+import { type BreadcrumbItem } from '@/types';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -67,28 +80,45 @@ const formatCurrency = (value: number) =>
         maximumFractionDigits: 2,
     }).format(value);
 
-const formatNumber = (value: number) => new Intl.NumberFormat('en-US').format(value);
+const formatNumber = (value: number) =>
+    new Intl.NumberFormat('en-US').format(value);
 
-const netFlowMonth = props.kpis.incoming_units_month - props.kpis.outgoing_units_month;
+const netFlowMonth =
+    props.kpis.incoming_units_month - props.kpis.outgoing_units_month;
 </script>
 
 <template>
     <Head title="Dashboard" />
 
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+        <div
+            class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4"
+        >
             <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
                 <Card class="gap-1">
                     <CardHeader class="pb-0">
                         <div class="flex items-center gap-2">
-                            <Warehouse class="h-5 w-5 text-black dark:text-white" />
-                            <CardDescription class="text-base font-semibold text-black dark:text-white">Total inventory value</CardDescription>
+                            <Warehouse
+                                class="h-5 w-5 text-black dark:text-white"
+                            />
+                            <CardDescription
+                                class="text-base font-semibold text-black dark:text-white"
+                                >Total inventory value</CardDescription
+                            >
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <CardTitle class="text-2xl font-semibold text-black dark:text-white">{{ formatCurrency(props.kpis.inventory_value) }}</CardTitle>
-                        <p class="mt-2 text-sm font-normal text-zinc-700 dark:text-white">
-                            {{ formatNumber(props.kpis.inventory_units) }} units in stock
+                        <CardTitle
+                            class="text-2xl font-semibold text-black dark:text-white"
+                            >{{
+                                formatCurrency(props.kpis.inventory_value)
+                            }}</CardTitle
+                        >
+                        <p
+                            class="mt-2 text-sm font-normal text-zinc-700 dark:text-white"
+                        >
+                            {{ formatNumber(props.kpis.inventory_units) }} units
+                            in stock
                         </p>
                     </CardContent>
                 </Card>
@@ -96,14 +126,28 @@ const netFlowMonth = props.kpis.incoming_units_month - props.kpis.outgoing_units
                 <Card class="gap-1">
                     <CardHeader class="pb-0">
                         <div class="flex items-center gap-2">
-                            <PackageSearch class="h-5 w-5 text-black dark:text-white" />
-                            <CardDescription class="text-base font-semibold text-black dark:text-white">Products under minimum</CardDescription>
+                            <PackageSearch
+                                class="h-5 w-5 text-black dark:text-white"
+                            />
+                            <CardDescription
+                                class="text-base font-semibold text-black dark:text-white"
+                                >Products under minimum</CardDescription
+                            >
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <CardTitle class="text-2xl font-semibold text-black dark:text-white">{{ formatNumber(props.kpis.low_stock_count) }}</CardTitle>
-                        <p class="mt-2 text-sm font-normal text-zinc-700 dark:text-white">
-                            From {{ formatNumber(props.kpis.total_products) }} active products
+                        <CardTitle
+                            class="text-2xl font-semibold text-black dark:text-white"
+                            >{{
+                                formatNumber(props.kpis.low_stock_count)
+                            }}</CardTitle
+                        >
+                        <p
+                            class="mt-2 text-sm font-normal text-zinc-700 dark:text-white"
+                        >
+                            From
+                            {{ formatNumber(props.kpis.total_products) }} active
+                            products
                         </p>
                     </CardContent>
                 </Card>
@@ -111,16 +155,30 @@ const netFlowMonth = props.kpis.incoming_units_month - props.kpis.outgoing_units
                 <Card class="gap-1">
                     <CardHeader class="pb-0">
                         <div class="flex items-center gap-2">
-                            <TrendingUp class="h-5 w-5 text-black dark:text-white" />
-                            <CardDescription class="text-base font-semibold text-black dark:text-white">Monthly inbound / outbound</CardDescription>
+                            <TrendingUp
+                                class="h-5 w-5 text-black dark:text-white"
+                            />
+                            <CardDescription
+                                class="text-base font-semibold text-black dark:text-white"
+                                >Monthly inbound / outbound</CardDescription
+                            >
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <CardTitle class="text-2xl font-semibold text-black dark:text-white">
-                            {{ formatNumber(props.kpis.incoming_units_month) }} / {{ formatNumber(props.kpis.outgoing_units_month) }}
+                        <CardTitle
+                            class="text-2xl font-semibold text-black dark:text-white"
+                        >
+                            {{
+                                formatNumber(props.kpis.incoming_units_month)
+                            }}
+                            /
+                            {{ formatNumber(props.kpis.outgoing_units_month) }}
                         </CardTitle>
-                        <p class="mt-2 text-sm font-normal text-zinc-700 dark:text-white">
-                            Period {{ props.kpis.period.start }} to {{ props.kpis.period.end }}
+                        <p
+                            class="mt-2 text-sm font-normal text-zinc-700 dark:text-white"
+                        >
+                            Period {{ props.kpis.period.start }} to
+                            {{ props.kpis.period.end }}
                         </p>
                     </CardContent>
                 </Card>
@@ -129,17 +187,40 @@ const netFlowMonth = props.kpis.incoming_units_month - props.kpis.outgoing_units
                     <CardHeader class="pb-0">
                         <div class="flex items-center gap-2">
                             <Boxes class="h-5 w-5 text-black dark:text-white" />
-                            <CardDescription class="text-base font-semibold text-black dark:text-white">Net flow this month</CardDescription>
+                            <CardDescription
+                                class="text-base font-semibold text-black dark:text-white"
+                                >Net flow this month</CardDescription
+                            >
                         </div>
                     </CardHeader>
                     <CardContent>
-                        <CardTitle class="text-2xl font-semibold text-black dark:text-white">{{ formatNumber(netFlowMonth) }} units</CardTitle>
+                        <CardTitle
+                            class="text-2xl font-semibold text-black dark:text-white"
+                            >{{ formatNumber(netFlowMonth) }} units</CardTitle
+                        >
                         <div class="mt-2 flex items-center gap-2">
-                            <Badge :variant="netFlowMonth >= 0 ? 'default' : 'destructive'">
-                                {{ netFlowMonth >= 0 ? 'Positive' : 'Negative' }}
+                            <Badge
+                                :variant="
+                                    netFlowMonth >= 0
+                                        ? 'default'
+                                        : 'destructive'
+                                "
+                            >
+                                {{
+                                    netFlowMonth >= 0 ? 'Positive' : 'Negative'
+                                }}
                             </Badge>
-                            <span class="text-sm font-normal text-zinc-700 dark:text-white">
-                                {{ formatNumber(props.kpis.total_providers) }} providers / {{ formatNumber(props.kpis.total_clients) }} clients
+                            <span
+                                class="text-sm font-normal text-zinc-700 dark:text-white"
+                            >
+                                {{
+                                    formatNumber(props.kpis.total_providers)
+                                }}
+                                providers /
+                                {{
+                                    formatNumber(props.kpis.total_clients)
+                                }}
+                                clients
                             </span>
                         </div>
                     </CardContent>
@@ -150,7 +231,10 @@ const netFlowMonth = props.kpis.incoming_units_month - props.kpis.outgoing_units
                 <Card>
                     <CardHeader>
                         <CardTitle>Top moved products</CardTitle>
-                        <CardDescription>Products with highest cumulative stock movements</CardDescription>
+                        <CardDescription
+                            >Products with highest cumulative stock
+                            movements</CardDescription
+                        >
                     </CardHeader>
                     <CardContent>
                         <Table>
@@ -163,23 +247,45 @@ const netFlowMonth = props.kpis.incoming_units_month - props.kpis.outgoing_units
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                <TableRow v-for="product in props.top_moved_products" :key="product.sku">
-                                    <TableCell class="font-medium">{{ product.sku }}</TableCell>
+                                <TableRow
+                                    v-for="product in props.top_moved_products"
+                                    :key="product.sku"
+                                >
+                                    <TableCell class="font-medium">{{
+                                        product.sku
+                                    }}</TableCell>
                                     <TableCell>{{ product.name }}</TableCell>
-                                    <TableCell>{{ formatNumber(product.moved_units) }}</TableCell>
+                                    <TableCell>{{
+                                        formatNumber(product.moved_units)
+                                    }}</TableCell>
                                     <TableCell>
                                         <div class="flex items-center gap-2">
-                                            <span>{{ formatNumber(product.current_stock) }}</span>
+                                            <span>{{
+                                                formatNumber(
+                                                    product.current_stock,
+                                                )
+                                            }}</span>
                                             <ArrowDownRight
-                                                v-if="product.current_stock <= product.min_stock"
+                                                v-if="
+                                                    product.current_stock <=
+                                                    product.min_stock
+                                                "
                                                 class="h-3.5 w-3.5 text-destructive"
                                             />
-                                            <ArrowUpRight v-else class="h-3.5 w-3.5 text-emerald-600" />
+                                            <ArrowUpRight
+                                                v-else
+                                                class="h-3.5 w-3.5 text-emerald-600"
+                                            />
                                         </div>
                                     </TableCell>
                                 </TableRow>
-                                <TableRow v-if="!props.top_moved_products.length">
-                                    <TableCell colspan="4" class="text-center text-muted-foreground">
+                                <TableRow
+                                    v-if="!props.top_moved_products.length"
+                                >
+                                    <TableCell
+                                        colspan="4"
+                                        class="text-center text-muted-foreground"
+                                    >
                                         No stock movement data available.
                                     </TableCell>
                                 </TableRow>
@@ -191,7 +297,9 @@ const netFlowMonth = props.kpis.incoming_units_month - props.kpis.outgoing_units
                 <Card>
                     <CardHeader>
                         <CardTitle>Low stock alert</CardTitle>
-                        <CardDescription>Products at or below minimum stock</CardDescription>
+                        <CardDescription
+                            >Products at or below minimum stock</CardDescription
+                        >
                     </CardHeader>
                     <CardContent>
                         <Table>
@@ -199,21 +307,39 @@ const netFlowMonth = props.kpis.incoming_units_month - props.kpis.outgoing_units
                                 <TableRow>
                                     <TableHead>SKU</TableHead>
                                     <TableHead>Product</TableHead>
-                                    <TableHead class="text-right">Stock</TableHead>
-                                    <TableHead class="text-right">Minimum</TableHead>
+                                    <TableHead class="text-right"
+                                        >Stock</TableHead
+                                    >
+                                    <TableHead class="text-right"
+                                        >Minimum</TableHead
+                                    >
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                <TableRow v-for="product in props.low_stock_products" :key="product.id">
-                                    <TableCell class="font-medium">{{ product.sku }}</TableCell>
+                                <TableRow
+                                    v-for="product in props.low_stock_products"
+                                    :key="product.id"
+                                >
+                                    <TableCell class="font-medium">{{
+                                        product.sku
+                                    }}</TableCell>
                                     <TableCell>{{ product.name }}</TableCell>
                                     <TableCell class="text-right">
-                                        <Badge variant="destructive">{{ formatNumber(product.current_stock) }}</Badge>
+                                        <Badge variant="destructive">{{
+                                            formatNumber(product.current_stock)
+                                        }}</Badge>
                                     </TableCell>
-                                    <TableCell class="text-right">{{ formatNumber(product.min_stock) }}</TableCell>
+                                    <TableCell class="text-right">{{
+                                        formatNumber(product.min_stock)
+                                    }}</TableCell>
                                 </TableRow>
-                                <TableRow v-if="!props.low_stock_products.length">
-                                    <TableCell colspan="4" class="text-center text-muted-foreground">
+                                <TableRow
+                                    v-if="!props.low_stock_products.length"
+                                >
+                                    <TableCell
+                                        colspan="4"
+                                        class="text-center text-muted-foreground"
+                                    >
                                         Great, no low stock products right now.
                                     </TableCell>
                                 </TableRow>
@@ -224,4 +350,4 @@ const netFlowMonth = props.kpis.incoming_units_month - props.kpis.outgoing_units
             </div>
         </div>
     </AppLayout>
- </template>
+</template>

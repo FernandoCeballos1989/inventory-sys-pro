@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\ClientController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\StockController;
@@ -99,4 +99,4 @@ Route::group(['middleware' => ['auth', 'verified']], function () {
     Route::resource('stocks', StockController::class);
 });
 
-require __DIR__ . '/settings.php';
+require __DIR__.'/settings.php';

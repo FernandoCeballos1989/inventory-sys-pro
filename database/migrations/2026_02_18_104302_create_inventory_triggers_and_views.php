@@ -1,9 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -15,9 +13,9 @@ return new class extends Migration
         $driver = DB::getDriverName();
 
         // --- LIMPIEZA PREVENTIVA ---
-        DB::statement("DROP VIEW IF EXISTS vista_productos_criticos");
-        DB::unprepared("DROP TRIGGER IF EXISTS tr_actualizar_stock_after_insert");
-        DB::unprepared("DROP TRIGGER IF EXISTS tr_stock_after_delete");
+        DB::statement('DROP VIEW IF EXISTS vista_productos_criticos');
+        DB::unprepared('DROP TRIGGER IF EXISTS tr_actualizar_stock_after_insert');
+        DB::unprepared('DROP TRIGGER IF EXISTS tr_stock_after_delete');
 
         // --- 1. TRIGGER: INSERT (MySQL vs SQLite) ---
         if ($driver === 'mysql') {
@@ -58,7 +56,7 @@ return new class extends Migration
 
         // --- 2. VISTA: REPORTE DE REPOSICIÓN ---
         // SQLite no soporta 'CREATE OR REPLACE', así que usamos DROP (ya hecho arriba) + CREATE
-        DB::statement("
+        DB::statement('
             CREATE VIEW vista_productos_criticos AS
             SELECT 
                 sku, 
@@ -68,7 +66,7 @@ return new class extends Migration
                 (min_stock - current_stock) AS unidades_a_pedir
             FROM products
             WHERE current_stock <= min_stock
-        ");
+        ');
 
         // --- 3. TRIGGER: DELETE (MySQL vs SQLite) ---
         if ($driver === 'mysql') {
@@ -107,10 +105,10 @@ return new class extends Migration
     public function down(): void
     {
         // 1. Eliminar la vista primero (ya que depende de la tabla products)
-        DB::statement("DROP VIEW IF EXISTS vista_productos_criticos");
+        DB::statement('DROP VIEW IF EXISTS vista_productos_criticos');
 
         // 2. Eliminar los triggers
-        DB::unprepared("DROP TRIGGER IF EXISTS tr_actualizar_stock_after_insert");
-        DB::unprepared("DROP TRIGGER IF EXISTS tr_stock_after_delete");
+        DB::unprepared('DROP TRIGGER IF EXISTS tr_actualizar_stock_after_insert');
+        DB::unprepared('DROP TRIGGER IF EXISTS tr_stock_after_delete');
     }
 };

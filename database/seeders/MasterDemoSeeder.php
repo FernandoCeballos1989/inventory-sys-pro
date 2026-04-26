@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
-use App\Models\User;
 use App\Models\Category;
-use App\Models\Provider;
 use App\Models\Client;
 use App\Models\Product;
+use App\Models\Provider;
 use App\Models\Stock;
+use App\Models\User;
+use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
 class MasterDemoSeeder extends Seeder
@@ -34,7 +34,7 @@ class MasterDemoSeeder extends Seeder
             'contact_name' => 'Ventas Logitech',
             'phone_number' => '1-800-555-0199',
             'email' => 'sales@logitech.com',
-            'address' => 'Silicon Valley, CA'
+            'address' => 'Silicon Valley, CA',
         ]);
 
         $prov2 = Provider::create([
@@ -42,7 +42,7 @@ class MasterDemoSeeder extends Seeder
             'contact_name' => 'Soporte Dell',
             'phone_number' => '1-800-DELL-PRO',
             'email' => 'support@dell.com',
-            'address' => 'Round Rock, Texas'
+            'address' => 'Round Rock, Texas',
         ]);
 
         // 4. CLIENTES (Columnas: name, fiscal_code, email, phone, send_address)
@@ -51,7 +51,7 @@ class MasterDemoSeeder extends Seeder
             'fiscal_code' => 'B12345678',
             'email' => 'contact@techsolutions.com',
             'phone' => '555-0101',
-            'send_address' => '123 Innovation Drive'
+            'send_address' => '123 Innovation Drive',
         ]);
 
         // 5. PRODUCTOS (Columnas: sku, name, selling_price, current_stock, min_stock, category_id)
@@ -63,7 +63,7 @@ class MasterDemoSeeder extends Seeder
             'current_stock' => 0, // Los triggers o el seeder de Stock lo subirán
             'min_stock' => 5,
             'category_id' => 1, // Electronics
-            'warehouse_location' => 'A-01'
+            'warehouse_location' => 'A-01',
         ]);
 
         $p2 = Product::create([
@@ -73,7 +73,7 @@ class MasterDemoSeeder extends Seeder
             'current_stock' => 0,
             'min_stock' => 2,
             'category_id' => 5, // Hardware
-            'warehouse_location' => 'B-04'
+            'warehouse_location' => 'B-04',
         ]);
 
         // Si tienes Factory configurado con los nombres correctos:
@@ -82,35 +82,35 @@ class MasterDemoSeeder extends Seeder
         // 6. MOVIMIENTOS DE STOCK (Columnas: product_id, provider_id, client_id, type, quantity, price, remarks)
         // Entrada para el Producto 1
         Stock::create([
-            'product_id'  => $p1->id,
+            'product_id' => $p1->id,
             'provider_id' => $prov1->id,
-            'client_id'   => null,
-            'type'        => 'in',
-            'quantity'    => 20,
-            'price'       => $p1->selling_price * 0.7,
-            'remarks'     => 'Carga inicial por Seeder',
+            'client_id' => null,
+            'type' => 'in',
+            'quantity' => 20,
+            'price' => $p1->selling_price * 0.7,
+            'remarks' => 'Carga inicial por Seeder',
         ]);
 
         // Entrada para el Producto 2
         Stock::create([
-            'product_id'  => $p2->id,
+            'product_id' => $p2->id,
             'provider_id' => $prov2->id,
-            'client_id'   => null,
-            'type'        => 'in',
-            'quantity'    => 5,
-            'price'       => $p2->selling_price * 0.7,
-            'remarks'     => 'Stock inicial hardware entusiasta',
+            'client_id' => null,
+            'type' => 'in',
+            'quantity' => 5,
+            'price' => $p2->selling_price * 0.7,
+            'remarks' => 'Stock inicial hardware entusiasta',
         ]);
 
         // Salida (Venta) para el Producto 1
         Stock::create([
-            'product_id'  => $p1->id,
+            'product_id' => $p1->id,
             'provider_id' => null,
-            'client_id'   => $cli1->id,
-            'type'        => 'out', // Asegúrate si es 'out' o 'exit'
-            'quantity'    => 2,
-            'price'       => $p1->selling_price,
-            'remarks'     => 'Venta de prueba a cliente corporativo',
+            'client_id' => $cli1->id,
+            'type' => 'out', // Asegúrate si es 'out' o 'exit'
+            'quantity' => 2,
+            'price' => $p1->selling_price,
+            'remarks' => 'Venta de prueba a cliente corporativo',
         ]);
     }
 }

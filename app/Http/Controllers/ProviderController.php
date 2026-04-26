@@ -14,7 +14,7 @@ class ProviderController extends Controller
     public function index()
     {
         return Inertia::render('providers/index', [
-            'providers' => Provider::latest()->paginate(5)
+            'providers' => Provider::latest()->paginate(5),
         ]);
     }
 
@@ -58,7 +58,7 @@ class ProviderController extends Controller
     public function edit(Provider $provider)
     {
         return Inertia::render('providers/edit', [
-            'provider' => $provider
+            'provider' => $provider,
         ]);
     }
 
@@ -71,7 +71,7 @@ class ProviderController extends Controller
             'company_name' => 'required|string|max:255',
             'contact_name' => 'nullable|string|max:255',
             'phone_number' => 'nullable|string|max:20',
-            'email' => 'required|email|max:255|unique:providers,email,' . $provider->id,
+            'email' => 'required|email|max:255|unique:providers,email,'.$provider->id,
             'address' => 'nullable|string|max:255',
         ]);
 
