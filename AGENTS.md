@@ -7,7 +7,7 @@
 - **Auth**: Laravel Fortify (registration, password reset, 2FA enabled; email verification in config but User model does not implement `MustVerifyEmail`)
 - **Route binding**: laravel/wayfinder — generates TypeScript route helpers
 - **Testing**: Pest 3 with RefreshDatabase (in-memory SQLite)
-- **Mail**: Resend (`resend/resend-php`), `MAIL_FROM_ADDRESS=support@inventory.shorai-lab.com`
+- **Mail**: Resend (`resend/resend-php`), `MAIL_FROM_ADDRESS=inventory@shorai-lab.com`
 
 ## Commands
 
