@@ -4,28 +4,34 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Log;
 
 class CleanDemoDatabases extends Command
 {
     protected $signature = 'demo:clean';
 
-    protected $description = 'Borra las BBDD temporales de la demo de más de 24h';
+    protected $description = 'Borra las BBDD temporales de la demo de más de 1h';
 
-    public function handle()
+    public function handle(): int
     {
         $directory = database_path('demos');
+
+        if (! File::isDirectory($directory)) {
+            $this->info('No demos directory found.');
+
+            return self::SUCCESS;
+        }
+
         $files = File::files($directory);
         $deletedCount = 0;
 
         foreach ($files as $file) {
             $filename = $file->getFilename();
 
-            // 1. Ignorar el maestro y archivos que no sean sqlite
             if ($filename === 'master.sqlite' || $file->getExtension() !== 'sqlite') {
                 continue;
             }
 
-            // 2. Verificar antigüedad (24 horas)
             $lastModified = \Carbon\Carbon::createFromTimestamp($file->getMTime());
 
             if (now()->diffInHours($lastModified) >= 1) {
@@ -33,13 +39,19 @@ class CleanDemoDatabases extends Command
                     File::delete($file->getPathname());
                     $deletedCount++;
                 } catch (\Exception $e) {
-                    // Silencioso en producción para no llenar logs de errores de Windows
+                    Log::warning('Failed to delete demo DB', [
+                        'file' => $filename,
+                        'error' => $e->getMessage(),
+                    ]);
                 }
             }
         }
 
         if ($deletedCount > 0) {
-            $this->info("Limpieza terminada. Se eliminaron {$deletedCount} bases de datos obsoletas.");
+            $this->info("Cleaned {$deletedCount} expired demo database(s).");
+            Log::info('demo:clean completed', ['deleted' => $deletedCount]);
         }
+
+        return self::SUCCESS;
     }
 }

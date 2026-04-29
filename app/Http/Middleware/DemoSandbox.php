@@ -18,7 +18,7 @@ class DemoSandbox
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (app()->isProduction()) {
+        if (app()->isProduction() || app()->runningUnitTests()) {
             return $next($request);
         }
 

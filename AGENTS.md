@@ -4,9 +4,10 @@
 
 - **Backend**: Laravel 12, PHP ^8.2, SQLite (default)
 - **Frontend**: Vue 3 + TypeScript, Inertia.js v2, Tailwind CSS v4, shadcn-vue (new-york-v4 style)
-- **Auth**: Laravel Fortify
+- **Auth**: Laravel Fortify (registration, password reset, 2FA enabled; email verification in config but User model does not implement `MustVerifyEmail`)
 - **Route binding**: laravel/wayfinder — generates TypeScript route helpers
 - **Testing**: Pest 3 with RefreshDatabase (in-memory SQLite)
+- **Mail**: Resend (`resend/resend-php`), `MAIL_FROM_ADDRESS=support@inventory.shorai-lab.com`
 
 ## Commands
 
@@ -81,7 +82,7 @@ All resource controllers use `Route::resource()` in `routes/web.php`.
 - **ESLint**: `vue/multi-word-component-names` off, `@typescript-eslint/no-explicit-any` off, `consistent-type-imports` (separate type-imports), `import/order` enforced (alphabetized)
 - **EditorConfig**: 4-space indent, LF line endings, UTF-8
 - **Testing DB**: SQLite `:memory:` (set in `phpunit.xml`)
-- **Demo sandbox**: `DemoSandbox` middleware is appended to web group — writes are blocked in demo mode
+- **Demo sandbox**: `DemoSandbox` middleware provides per-session SQLite isolation. Each session gets a copy of `database/demos/master.sqlite` as `demo_{sessionId}.sqlite`. Writes go to the session copy, not the master. **No-op in production** (`APP_ENV=production`). Expired copies (≥1h) are cleaned hourly by `demo:clean` (scheduled in `routes/console.php`, runs via supervisord scheduler).
 
 ## Docker & deployment
 
